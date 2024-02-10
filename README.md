@@ -8,8 +8,6 @@ This application is designed to collect data from a static list of url addresses
 - Puppeteer
 - Cheerio
 - axios
-- Express.js
-- dotenv
 
 ## Getting Started
 
@@ -31,12 +29,45 @@ A step by step series of examples that tell you how to get a development environ
    ```
 2. Install NPM packages
    ```sh
-   npm install
+   yarn install
    ```
 
 ## Usage
 
-Under development
+```bash
+# serve with hot reload at localhost:3000
+$ yarn dev
+
+# build for production and launch server
+$ yarn build
+$ yarn start
+
+# generate static project
+$ yarn generate
+```
+
+For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
+
+
+### Enable legacy OpenSSL provider.
+
+On Unix-like (Linux, macOS, Git bash, etc.):
+
+`export NODE_OPTIONS=--openssl-legacy-provider`
+
+On Windows command prompt:
+
+`set NODE_OPTIONS=--openssl-legacy-provider`
+
+On PowerShell:
+
+`$env:NODE_OPTIONS = "--openssl-legacy-provider"`
+
+## Credits
+
+This project was developed forward from [Solomon Eseme's Repo](https://github.com/Kaperskyguru/nuxt-web-scraping-puppeteer)
+
+This project was assisted by [GitHub Copilot](https://copilot.github.com/), an AI-powered code completion tool.
 
 ## License
 
@@ -44,7 +75,6 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ## Contact
 
-Your Name - your_email@gmail.com
+Email: miroslaw@dubaj.dev
 
 Project Link: [https://github.com/miroslaw-dubaj/web-scraper-ui](https://github.com/miroslaw-dubaj/web-scraper-ui)
-```
