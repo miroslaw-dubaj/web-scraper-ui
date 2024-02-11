@@ -1,5 +1,13 @@
 <template>
   <section>
+    <select v-model="selectedSortOption" class="form-select mt-3">
+      <option value="nameAsc">Po nazwie ogłoszenia (A-Z)</option>
+      <option value="nameDesc">Po nazwie ogłoszenia  (Z-A)</option>
+      <option value="priceAsc">Od najtańszych (Min do Max)</option>
+      <option value="priceDesc">Od najdroższych (Max do Min)</option>
+      <option value="dateDesc">Od najnowszych (New to Old)</option>
+      <option value="dateAsc">Od najstarszych (Old to New)</option>
+    </select>
     <div class="row mt-5">
       <div class="card-group">
         <div class="row">
@@ -11,7 +19,7 @@
             <Job :job="job" />
           </div> -->
                 <div
-        v-for="(job, i) in jobs"
+        v-for="(job, i) in sortedJobs"
         :key="i"
         class="col-sm-6 col-md-4 col-lg-3 pb-3 d-flex flex-column justify-content-between"
       >
@@ -34,20 +42,38 @@
   </section>
 </template>
 <script>
-import { mapState } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 export default {
+  data() {
+    return {
+      selectedSortOption: 'nameAsc', // Default sort option
+    };
+  },
   computed: {
-    ...mapState({
-      jobs: (state) => {
-        return [...state.job.jobs].map((job) => {
-          return {
-            ...job,
-            price: String(job.price).replace('zł', '').trim(),
-            imgUrl: job.imgUrl || '/no-image.jpg',
-          }
-        }).sort((a, b) => a.price - b.price)
-      },
-    }),
+    // ...mapState({
+    //   jobs: (state) => {
+    //     return [...state.job.jobs].map((job) => {
+    //       return {
+    //         ...job,
+    //         price: String(job.price).replace('zł', '').trim(),
+    //         imgUrl: job.imgUrl || '/no-image.jpg',
+    //       }
+    //     })
+    //   },
+    //   sortedJobs: state => state.job.sortedJobs,
+    // }),
+        ...mapGetters('job', ['sortedJobs']),
+  },
+  watch: {
+    selectedSortOption(newSortOption) {
+      this.setSortOption(newSortOption);
+    },
+  },
+  methods: {
+    ...mapActions('job', ['setSortOption']),
+  },
+  created() {
+    this.setSortOption(this.selectedSortOption);
   },
 }
 </script>

@@ -11,7 +11,7 @@ class Jobs {
   // Initializes and create puppeteer instance
   static async init(payload) {
     browser = await puppeteer.launch({
-      headless: false,
+      // headless: false,
       args: [
         '--no-sandbox',
         '--disable-setuid-sandbox',
@@ -122,6 +122,13 @@ class Jobs {
         //   titleText: JSON.stringify(cardArr.map(element => element.innerHTML)[2]),
         // })
         if (args[0].type === 'armybazar') {
+
+          function parseDateTime(dateTimeString) {
+            let [date, time] = dateTimeString.split(" ");
+            let [day, month, year] = date.split(".");
+            return `${year}-${month}-${day} ${time}`;
+          }
+          
           cardArr = cardArr.map((element) => element.innerHTML)
           cardArr = cardArr.map((element, i) => {
             let el = parser.parseFromString(element.trim(), 'text/html')
@@ -134,12 +141,15 @@ class Jobs {
           // cardArr = cardArr.slice(1, 1);
           cardArr.forEach((el, i) => {
             if (el.querySelector(args[0].structure.titleText) !== null) {
+              const date = el.querySelector(args[0].structure.titleDate)?.textContent;
+              const fixedDate = date.slice(0, 10) + ' ' + date.slice(10);
+              const parsedDate = parseDateTime(fixedDate);
               cardLinks.push({
                 titleText: el.querySelector(args[0].structure.titleText)?.textContent,
                 titleURL: el.querySelector(args[0].structure.titleURL)?.href,
                 titleDesc: el.querySelector(args[0].structure.titleDesc)?.textContent,
                 titlePrice: el.querySelector(args[0].structure.titlePrice)?.textContent,
-                titleDate: el.querySelector(args[0].structure.titleDate)?.textContent,
+                titleDate: parsedDate, 
                 advertImage: el.querySelector(args[0].structure.advertImage)?.src,
                 origin: args[0].type,
               })
@@ -198,7 +208,7 @@ class Jobs {
       resolvedJob.price = job.titlePrice
       resolvedJob.imgUrl = job.advertImage
       resolvedJob.origin = job.origin
-      resolvedJob.date = job.titleDate
+      resolvedJob.date = job.titleDate 
       return resolvedJob
     })
     return resolvedJob

@@ -16,7 +16,7 @@
         </p>
         <div class="card-footer">
           <small>{{ mapOrigin }} </small>
-          <small style="float: right">{{ job.date }} </small>
+          <small style="float: right">{{ job.date === "01.01.1970" ? 'Brak daty' : job.date}} </small>
         </div>
       </div>
     </div>
