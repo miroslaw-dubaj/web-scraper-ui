@@ -6,7 +6,7 @@
         <div class="card-header m-n1" :style="titleStyle">
           {{ job.price.includes('Do uzgodnienia') ? 'Brak ceny' : (job.price + ' zł') }}
         </div>
-        <div class="card-title">
+        <div class="card-title h1">
           {{ job.title }}
         </div>
         <p class="card-text flex-grow-1">

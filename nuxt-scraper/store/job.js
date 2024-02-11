@@ -22,6 +22,7 @@ export const getters = {
     return [...state.jobs].map((job) => {      
       return {
         ...job,
+        title: job.title.toLowerCase().includes('sprzedam') ? job.title.toLowerCase().replace('sprzedam', '').trim() : job.title,
         price: String(job.price).replace('zł', '').trim(),
         imgUrl: job.imgUrl || '/no-image.jpg',
         date: job.date || '01.01.1970',
